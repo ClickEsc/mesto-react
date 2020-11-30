@@ -16,34 +16,40 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
 
   function handleEditAvatarClick() {
-    document.querySelector('.profile__edit-button_avatar').addEventListener('click', () => {
-      setEditAvatarPopupOpen(true);
-    })
+    setEditAvatarPopupOpen(true);
   }
   
   // Хук для попапа редактирования информации о пользователе
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
 
   function handleEditProfileClick() {
-    document.getElementById('editProfilePopupOpenButton').addEventListener('click', () => {
-      setEditProfilePopupOpen(true);
-    })
+    setEditProfilePopupOpen(true);
   }
   
   // Хук для попапа добавления карточки
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState();
 
   function handleAddPlaceClick() {
-    document.querySelector('.profile__add-button').addEventListener('click', () => {
-      setAddPlacePopupOpen(true);
-    })
+    setAddPlacePopupOpen(true);
   }
-  
+
+  // Хук для попапа показа полноразмерного изображения
+  const [selectedCard, setSelectedCard] = React.useState('');
+
+  function handleCardClick() {
+    setSelectedCard({
+      src: this.link,
+      name: this.name,
+      alt: `Изображение под названием ${this.name}`
+    });
+  }
+
   // Функция закрытия всех попапов
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
+    setSelectedCard('')
   }
 
   return (
@@ -51,7 +57,7 @@ function App() {
       <div className="page">
         <div className="page__container">
           <Header />
-          <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}/>
+          <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
           <Footer />
 
           {isEditAvatarPopupOpen ?
@@ -96,8 +102,10 @@ function App() {
           : ''}
           
           <PopupWithForm isOpen={false} onClose={closeAllPopups} name="confirm" title="Вы уверены?" buttonTitle="Да" />
-
-          <ImagePopup isOpen={false} onClose={closeAllPopups} />
+          
+          {(selectedCard !== '') ?
+            <ImagePopup card={selectedCard} isOpen={true} onClose={closeAllPopups} name="show-image" />
+          : ''}
 
         </div>  
       </div>
