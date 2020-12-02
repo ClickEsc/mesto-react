@@ -5,7 +5,7 @@ function Card(props) {
   } 
 
   return (
-    <li key={props._id} className="photo-gallery__item">
+    <li className="photo-gallery__item">
     <img className="photo-gallery__image" onClick={handleCardClick} alt={props.alt} src={props.link}/>
     <h2 className="photo-gallery__heading">{props.name}</h2>
     <div className="photo-gallery__like-container">

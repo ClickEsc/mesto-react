@@ -21,13 +21,8 @@ function Main(props) {
       setUserAvatar(res.avatar);
     }
 
-    return fetch(`${api.baseUrl}/users/me`, {
-      method: 'GET',
-      headers: api.headers
-    })
-      .then(res => api.showError(res))
+    api.getUserInfo()
       .then((res) => {
-        setCards(cards);
         handleUserInfo(res);
       })
   }, []);
@@ -37,11 +32,7 @@ function Main(props) {
       setCards(res);
     }
 
-    return fetch(`${api.baseUrl}/cards`, {
-      method: 'GET',
-      headers: api.headers
-    })
-      .then(res => api.showError(res))
+    api.getInitialCards()
       .then((res) => {
         const initialCards = res.map((item) => {
           return {
