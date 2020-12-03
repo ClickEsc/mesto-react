@@ -25,6 +25,7 @@ function Main(props) {
       .then((res) => {
         handleUserInfo(res);
       })
+      .catch(err => console.log(`Ошибка при обращении за информацией о пользователе: ${err}`))
   }, []);
 
   React.useEffect(() => {
@@ -45,6 +46,7 @@ function Main(props) {
         });
         handleInitialCards(initialCards);
       })
+      .catch(err => console.log(`Ошибка при запросе начальных карточек: ${err}`))
   }, []);
 
     const renderedCards = cards.map((card) => {

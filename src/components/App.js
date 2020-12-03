@@ -60,7 +60,7 @@ function App() {
           <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
           <Footer />
 
-          <PopupWithForm isOpen={isEditAvatarPopupOpen ? true : false } onClose={closeAllPopups} name="load-avatar" title="Обновить аватар" buttonTitle="Сохранить" children={
+          <PopupWithForm isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} name="load-avatar" title="Обновить аватар" buttonTitle="Сохранить" children={
             <>
               <div className="popup__wrap">
                 <input required id="avatar-link-input" type="url" className="popup__input popup__avatar-link" name="avatar" placeholder="Ссылка на картинку" />
@@ -69,7 +69,7 @@ function App() {
             </>
           }/>
           
-          <PopupWithForm isOpen={isEditProfilePopupOpen ? true : false } onClose={closeAllPopups} name="edit-profile" title="Редактировать профиль" buttonTitle="Сохранить" children={
+          <PopupWithForm isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} name="edit-profile" title="Редактировать профиль" buttonTitle="Сохранить" children={
             <>
               <div className="popup__wrap">
                 <input required id="username-input" className="popup__input popup__username" name="name" placeholder="Имя" minLength="2" maxLength="40" />
@@ -82,7 +82,7 @@ function App() {
             </>
           }/>
            
-          <PopupWithForm isOpen={ isAddPlacePopupOpen ? true : false } onClose={closeAllPopups} name="add-card" title="Новое место" buttonTitle="Создать" children={
+          <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} name="add-card" title="Новое место" buttonTitle="Создать" children={
             <>
               <div className="popup__wrap">
                 <input required id="place-name-input" className="popup__input popup__place-name" name="name" placeholder="Название" minLength="1" maxLength="30" />
@@ -94,8 +94,6 @@ function App() {
               </div>
             </>
           }/>
-          
-          <PopupWithForm isOpen={false} onClose={closeAllPopups} name="confirm" title="Вы уверены?" buttonTitle="Да" />
           
           {selectedCard ?
             <ImagePopup card={selectedCard} isOpen={true} onClose={closeAllPopups} name="show-image" />
