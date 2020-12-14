@@ -4,7 +4,7 @@ import { api } from '../utils/api.js';
 
 import '../index.css';
 
-import { CurrentUserContext, currentUserInfo } from '../contexts/CurrentUserContext.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 import Header from './Header.js';
 import Main from './Main.js';

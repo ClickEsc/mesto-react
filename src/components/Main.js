@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import { CardContext } from '../contexts/CardContext.js';
 
 import { api } from '../utils/api.js';
 
@@ -8,7 +9,7 @@ import Card from './Card.js';
 
 function Main(props) {
 
-  const currentUserInfo = React.useContext(CurrentUserContext)
+  const currentUserInfo = React.useContext(CurrentUserContext);
 
   const [cards, setCards] = React.useState([]);
 
@@ -20,13 +21,7 @@ function Main(props) {
     api.getInitialCards()
       .then((res) => {
         const initialCards = res.map((item) => {
-          return {
-          _id: item._id,
-          link: item.link,
-          alt: `Изображение под названием ${item.name}`,
-          name: item.name,
-          likes: item.likes.length
-          }
+          return item
         });
         handleInitialCards(initialCards);
       })
@@ -34,7 +29,9 @@ function Main(props) {
   }, []);
 
     const renderedCards = cards.map((card) => {
-      return <Card onCardClick={props.onCardClick} key={card._id} name={card.name} link={card.link} likes={card.likes} alt={`Изображение под названием ${card.name}`}/>
+      return <CardContext.Provider value={card}>
+        <Card onCardClick={props.onCardClick} key={card._id} name={card.name} link={card.link} likes={card.likes.length} alt={`Изображение под названием ${card.name}`}/>
+      </CardContext.Provider>
     })
   
   return (
