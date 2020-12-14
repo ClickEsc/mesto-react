@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { api } from '../utils/api.js';
+
 import '../index.css';
 
 import Header from './Header.js';
@@ -11,6 +13,22 @@ import ImagePopup from "./ImagePopup";
 
 
 function App() {
+
+  // Хук для установки данных пользователя в профиле
+  const [currentUser, setCurrentUser] = React.useState();
+
+  React.useEffect(() => {
+    function handleCurrentUserInfo(res) {
+      setCurrentUser(res);
+    }
+
+    api.getUserInfo()
+      .then((res) => {
+        handleCurrentUserInfo(res);
+      })
+      .catch(err => console.log(`Ошибка при обращении за информацией о пользователе: ${err}`))
+  }, []);
+
 
   // Хук для попапа редактирования аватара
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
