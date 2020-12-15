@@ -4,7 +4,10 @@ import { api } from '../utils/api.js';
 
 import '../index.css';
 
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import { CurrentUserContext, currentUserInfo } from '../contexts/CurrentUserContext.js';
+import { CardContext } from '../contexts/CardContext.js';
+
+import Card from './Card.js';
 
 import Header from './Header.js';
 import Main from './Main.js';
@@ -91,13 +94,62 @@ function App() {
     setSelectedCard(undefined);
   }
 
+  // Карточки
+
+  const [cards, setCards] = React.useState([]);
+  
+  React.useEffect(() => {
+    function handleInitialCards(res) {
+      setCards(res);
+    }
+
+    api.getInitialCards()
+      .then((res) => {
+        const initialCards = res.map((item) => {
+          return item
+        });
+        handleInitialCards(initialCards);
+      })
+      .catch(err => console.log(`Ошибка при запросе начальных карточек: ${err}`))
+  }, []);
+
+  const renderedCards = cards.map((card) => {
+
+    // Обработка лайка
+    function handleCardLike(card) {
+      const isLiked = card.likes.some(i => i._id === currentUser._id);
+        
+      api.changeLikeCardStatus(card, isLiked)
+        .then((newCard) => {
+          const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+          setCards(newCards);
+        })
+        .catch(err => console.log(`Ошибка при изменении статуса лайка: ${err}`))
+    }
+
+    // Обработка удаления карточки
+    function handleCardDelete(card) {
+        
+      api.deleteCard(card)
+        .then(() => {
+          const newCards = cards.filter((c) => c._id !== card._id);
+          setCards(newCards);
+        })
+        .catch(err => console.log(`Ошибка при удалении карточки: ${err}`))
+    }
+
+    return <CardContext.Provider value={card} key={card._id}>
+      <Card onCardLike={handleCardLike} onCardDelete={handleCardDelete} onCardClick={handleCardClick} name={card.name} link={card.link} likes={card.likes.length} alt={`Изображение под названием ${card.name}`}/>
+    </CardContext.Provider>
+  })
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
         <div className="page">
           <div className="page__container">
             <Header />
-            <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
+            <Main cards={renderedCards} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
             <Footer />
 
             <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onUpdateAvatar={handleUpdateAvatar} onClose={closeAllPopups} />
