@@ -70,22 +70,21 @@ class Api {
       .then(res => this.showError(res))
   }
 
-  // Лайкнуть карточку
-  putLike(card) {
-    return fetch(`${this.baseUrl}/cards/likes/${card._id}`, {
-      method: 'PUT',
-      headers: this.headers,
-    })
-      .then(res => this.showError(res))
-  }
-
-  // Убрать лайк карточки
-  deleteLike(card) {
-    return fetch(`${this.baseUrl}/cards/likes/${card._id}`, {
-      method: 'DELETE',
-      headers: this.headers,
-    })
-      .then(res => this.showError(res))
+  // Поставить или убрать лайк
+  changeLikeCardStatus(card, isLiked) {
+    if (isLiked) {
+      return fetch(`${this.baseUrl}/cards/likes/${card._id}`, {
+        method: 'DELETE',
+        headers: this.headers,
+      })
+        .then(res => this.showError(res))
+    } else {
+      return fetch(`${this.baseUrl}/cards/likes/${card._id}`, {
+        method: 'PUT',
+        headers: this.headers,
+      })
+        .then(res => this.showError(res))
+    }
   }
 }
 

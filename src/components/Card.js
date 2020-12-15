@@ -19,18 +19,26 @@ function Card(props) {
 
   function handleCardClick() {
     props.onCardClick(props.card);
-  } 
+  }
+  
+  function handleLikeClick() {
+    props.onCardLike(card);
+  }
+
+  function handleDeleteClick() {
+    props.onCardDelete(card);
+  }
 
   return (
     <li className="photo-gallery__item">
       <img className="photo-gallery__image" onClick={handleCardClick} alt={card.alt} src={card.link}/>
       <h2 className="photo-gallery__heading">{card.name}</h2>
       <div className="photo-gallery__like-container">
-        <button className={cardLikeButtonClassName} type="button"></button>
+        <button className={cardLikeButtonClassName} onClick={handleLikeClick} type="button"></button>
         <p className="photo-gallery__like-counter">{`${card.likes.length}`}</p>
       </div>
       {isOwn ? 
-        <button className="photo-gallery__remove-button" type="button"></button>
+        <button className="photo-gallery__remove-button" onClick={handleDeleteClick} type="button"></button>
       : ''}
     </li>
   );
