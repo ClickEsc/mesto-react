@@ -4,7 +4,7 @@ import { api } from '../utils/api.js';
 
 import '../index.css';
 
-import { CurrentUserContext, currentUserInfo } from '../contexts/CurrentUserContext.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { CardContext } from '../contexts/CardContext.js';
 
 import Card from './Card.js';
@@ -13,9 +13,9 @@ import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
 
-import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 
 
@@ -113,6 +113,16 @@ function App() {
       .catch(err => console.log(`Ошибка при запросе начальных карточек: ${err}`))
   }, []);
 
+  // Добавление новой карточки
+  function handleAddPlaceSubmit(card) {
+    api.postCard(card)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch(err => console.log(`Ошибка при создании новой карточки: ${err}`))
+  }
+
   const renderedCards = cards.map((card) => {
 
     // Обработка лайка
@@ -129,7 +139,6 @@ function App() {
 
     // Обработка удаления карточки
     function handleCardDelete(card) {
-        
       api.deleteCard(card)
         .then(() => {
           const newCards = cards.filter((c) => c._id !== card._id);
@@ -154,20 +163,8 @@ function App() {
 
             <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onUpdateAvatar={handleUpdateAvatar} onClose={closeAllPopups} />
             <EditProfilePopup isOpen={isEditProfilePopupOpen} onUpdateUser={handleUpdateUser} onClose={closeAllPopups} /> 
-           
-            <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} name="add-card" title="Новое место" buttonTitle="Создать" children={
-              <>
-                <div className="popup__wrap">
-                  <input required id="place-name-input" className="popup__input popup__place-name" name="name" placeholder="Название" minLength="1" maxLength="30" />
-                  <span id="place-name-input-error" className="popup__error-text popup__error-text_place-name"></span>
-                </div>
-                <div className="popup__wrap">
-                  <input required id="place-link-input" type="url" className="popup__input popup__place-link" name="link" placeholder="Ссылка на картинку" />
-                  <span id="place-link-input-error" className="popup__error-text popup__error-text_place-link"></span>
-                </div>
-              </>
-            }/>
-          
+            <AddPlacePopup isOpen={isAddPlacePopupOpen} onAddPlace={handleAddPlaceSubmit} onClose={closeAllPopups} />
+
             {selectedCard ?
               <ImagePopup card={selectedCard} isOpen={true} onClose={closeAllPopups} name="show-image" />
             : ''} 
