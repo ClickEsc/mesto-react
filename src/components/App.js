@@ -12,6 +12,7 @@ import Footer from './Footer.js';
 
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import ImagePopup from "./ImagePopup";
 
 
@@ -39,6 +40,15 @@ function App() {
         closeAllPopups();
       })
       .catch(err => console.log(`Ошибка при редактировании информации о пользователе: ${err}`))
+  }
+
+  function handleUpdateAvatar(currentUser) {
+    api.changeUserAvatar(currentUser)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch(err => console.log(`Ошибка при замене аватара пользователя: ${err}`))
   }
 
   // Хук для попапа редактирования аватара
@@ -90,15 +100,7 @@ function App() {
             <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
             <Footer />
 
-            <PopupWithForm isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} name="load-avatar" title="Обновить аватар" buttonTitle="Сохранить" children={
-              <>
-                <div className="popup__wrap">
-                  <input required id="avatar-link-input" type="url" className="popup__input popup__avatar-link" name="avatar" placeholder="Ссылка на картинку" />
-                  <span id="avatar-link-input-error" className="popup__error-text popup__error-text_avatar-link"></span>
-                </div>
-              </>
-            }/>
-          
+            <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onUpdateAvatar={handleUpdateAvatar} onClose={closeAllPopups} />
             <EditProfilePopup isOpen={isEditProfilePopupOpen} onUpdateUser={handleUpdateUser} onClose={closeAllPopups} /> 
            
             <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} name="add-card" title="Новое место" buttonTitle="Создать" children={
