@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { api } from '../utils/api.js';
-
 import PopupWithForm from "./PopupWithForm";
 
 import { CardContext } from '../contexts/CardContext.js';
