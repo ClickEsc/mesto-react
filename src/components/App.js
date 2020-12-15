@@ -11,6 +11,7 @@ import Main from './Main.js';
 import Footer from './Footer.js';
 
 import PopupWithForm from "./PopupWithForm";
+import EditProfilePopup from "./EditProfilePopup";
 import ImagePopup from "./ImagePopup";
 
 
@@ -31,6 +32,14 @@ function App() {
       .catch(err => console.log(`Ошибка при обращении за информацией о пользователе: ${err}`))
   }, []);
 
+  function handleUpdateUser(currentUser) {
+    api.editUserInfo(currentUser)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch(err => console.log(`Ошибка при редактировании информации о пользователе: ${err}`))
+  }
 
   // Хук для попапа редактирования аватара
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
@@ -90,18 +99,7 @@ function App() {
               </>
             }/>
           
-            <PopupWithForm isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} name="edit-profile" title="Редактировать профиль" buttonTitle="Сохранить" children={
-              <>
-                <div className="popup__wrap">
-                  <input required id="username-input" className="popup__input popup__username" name="name" placeholder="Имя" minLength="2" maxLength="40" />
-                  <span id="username-input-error" className="popup__error-text popup__error-text_username"></span>
-                </div>
-                <div className="popup__wrap">
-                  <input required id="bio-input" className="popup__input popup__bio" name="about" placeholder="О себе" minLength="2" maxLength="200" />
-                  <span id="bio-input-error" className="popup__error-text popup__error-text_bio"></span>
-                </div>
-              </>
-            }/>
+            <EditProfilePopup isOpen={isEditProfilePopupOpen} onUpdateUser={handleUpdateUser} onClose={closeAllPopups} /> 
            
             <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} name="add-card" title="Новое место" buttonTitle="Создать" children={
               <>
