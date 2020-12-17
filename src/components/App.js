@@ -24,11 +24,11 @@ function App() {
   // Хук для установки данных пользователя в профиле
   const [currentUser, setCurrentUser] = React.useState({});
 
-  React.useEffect(() => {
-    function handleCurrentUserInfo(res) {
-      setCurrentUser(res);
-    }
+  function handleCurrentUserInfo(res) {
+    setCurrentUser(res);
+  }
 
+  React.useEffect(() => {
     api.getUserInfo()
       .then((res) => {
         handleCurrentUserInfo(res);
@@ -97,12 +97,12 @@ function App() {
   // Карточки
 
   const [cards, setCards] = React.useState([]);
+
+  function handleInitialCards(res) {
+    setCards(res);
+  }
   
   React.useEffect(() => {
-    function handleInitialCards(res) {
-      setCards(res);
-    }
-
     api.getInitialCards()
       .then((res) => {
         const initialCards = res.map((item) => {
@@ -123,30 +123,29 @@ function App() {
       .catch(err => console.log(`Ошибка при создании новой карточки: ${err}`))
   }
 
-  const renderedCards = cards.map((card) => {
-
-    // Обработка лайка
-    function handleCardLike(card) {
-      const isLiked = card.likes.some(i => i._id === currentUser._id);
+  // Обработка лайка
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
         
-      api.changeLikeCardStatus(card, isLiked)
-        .then((newCard) => {
-          const newCards = cards.map((c) => c._id === card._id ? newCard : c);
-          setCards(newCards);
-        })
-        .catch(err => console.log(`Ошибка при изменении статуса лайка: ${err}`))
-    }
+    api.changeLikeCardStatus(card, isLiked)
+      .then((newCard) => {
+        const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+        setCards(newCards);
+      })
+      .catch(err => console.log(`Ошибка при изменении статуса лайка: ${err}`))
+  }
+  
+  // Обработка удаления карточки
+  function handleCardDelete(card) {
+    api.deleteCard(card)
+      .then(() => {
+        const newCards = cards.filter((c) => c._id !== card._id);
+        setCards(newCards);
+      })
+      .catch(err => console.log(`Ошибка при удалении карточки: ${err}`))
+  }
 
-    // Обработка удаления карточки
-    function handleCardDelete(card) {
-      api.deleteCard(card)
-        .then(() => {
-          const newCards = cards.filter((c) => c._id !== card._id);
-          setCards(newCards);
-        })
-        .catch(err => console.log(`Ошибка при удалении карточки: ${err}`))
-    }
-
+  const renderedCards = cards.map((card) => {
     return <CardContext.Provider value={card} key={card._id}>
       <Card onCardLike={handleCardLike} onCardDelete={handleCardDelete} onCardClick={handleCardClick} name={card.name} link={card.link} likes={card.likes.length} alt={`Изображение под названием ${card.name}`}/>
     </CardContext.Provider>
@@ -164,10 +163,7 @@ function App() {
             <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onUpdateAvatar={handleUpdateAvatar} onClose={closeAllPopups} />
             <EditProfilePopup isOpen={isEditProfilePopupOpen} onUpdateUser={handleUpdateUser} onClose={closeAllPopups} /> 
             <AddPlacePopup isOpen={isAddPlacePopupOpen} onAddPlace={handleAddPlaceSubmit} onClose={closeAllPopups} />
-
-            {selectedCard ?
-              <ImagePopup card={selectedCard} isOpen={true} onClose={closeAllPopups} name="show-image" />
-            : ''} 
+            <ImagePopup card={selectedCard} onClose={closeAllPopups} name="show-image" />
 
           </div>  
         </div>
