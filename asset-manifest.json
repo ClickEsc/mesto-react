@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/ClickEsc/mesto-react/static/css/main.ba78fc6e.chunk.css",
-    "main.js": "/ClickEsc/mesto-react/static/js/main.f1b48b1a.chunk.js",
-    "main.js.map": "/ClickEsc/mesto-react/static/js/main.f1b48b1a.chunk.js.map",
-    "runtime-main.js": "/ClickEsc/mesto-react/static/js/runtime-main.7f0b3bc3.js",
-    "runtime-main.js.map": "/ClickEsc/mesto-react/static/js/runtime-main.7f0b3bc3.js.map",
-    "static/js/2.bcc5b3cb.chunk.js": "/ClickEsc/mesto-react/static/js/2.bcc5b3cb.chunk.js",
-    "static/js/2.bcc5b3cb.chunk.js.map": "/ClickEsc/mesto-react/static/js/2.bcc5b3cb.chunk.js.map",
-    "static/js/3.01b8cd17.chunk.js": "/ClickEsc/mesto-react/static/js/3.01b8cd17.chunk.js",
-    "static/js/3.01b8cd17.chunk.js.map": "/ClickEsc/mesto-react/static/js/3.01b8cd17.chunk.js.map",
-    "index.html": "/ClickEsc/mesto-react/index.html",
-    "static/css/main.ba78fc6e.chunk.css.map": "/ClickEsc/mesto-react/static/css/main.ba78fc6e.chunk.css.map",
-    "static/js/2.bcc5b3cb.chunk.js.LICENSE.txt": "/ClickEsc/mesto-react/static/js/2.bcc5b3cb.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/ClickEsc/mesto-react/static/media/remove-button.bef38aca.svg"
+    "main.css": "/mesto-react/static/css/main.b577dd1c.chunk.css",
+    "main.js": "/mesto-react/static/js/main.f1b48b1a.chunk.js",
+    "main.js.map": "/mesto-react/static/js/main.f1b48b1a.chunk.js.map",
+    "runtime-main.js": "/mesto-react/static/js/runtime-main.c1f2de24.js",
+    "runtime-main.js.map": "/mesto-react/static/js/runtime-main.c1f2de24.js.map",
+    "static/js/2.bcc5b3cb.chunk.js": "/mesto-react/static/js/2.bcc5b3cb.chunk.js",
+    "static/js/2.bcc5b3cb.chunk.js.map": "/mesto-react/static/js/2.bcc5b3cb.chunk.js.map",
+    "static/js/3.01b8cd17.chunk.js": "/mesto-react/static/js/3.01b8cd17.chunk.js",
+    "static/js/3.01b8cd17.chunk.js.map": "/mesto-react/static/js/3.01b8cd17.chunk.js.map",
+    "index.html": "/mesto-react/index.html",
+    "static/css/main.b577dd1c.chunk.css.map": "/mesto-react/static/css/main.b577dd1c.chunk.css.map",
+    "static/js/2.bcc5b3cb.chunk.js.LICENSE.txt": "/mesto-react/static/js/2.bcc5b3cb.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/mesto-react/static/media/remove-button.bef38aca.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.7f0b3bc3.js",
+    "static/js/runtime-main.c1f2de24.js",
     "static/js/2.bcc5b3cb.chunk.js",
-    "static/css/main.ba78fc6e.chunk.css",
+    "static/css/main.b577dd1c.chunk.css",
     "static/js/main.f1b48b1a.chunk.js"
   ]
 }
